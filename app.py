@@ -282,7 +282,7 @@ def index():
             # Concurrent Query
             # ==================================
             with concurrent.futures.ThreadPoolExecutor(
-                max_workers=10
+                max_workers=3
             ) as executor:
 
                 futures = [
