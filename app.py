@@ -42,7 +42,7 @@ PATTERNS = [
         "format": "{cluster}-n{index:02d}"
     },
     {
-        "match": r"^(mtkhwrd|mtkswrd|mtkoa|mtkdr|mtkia|cmp)",
+        "match": r"^(mtkhwrd|mtkswrd|mtkoa|mtkdr|mtkia|mcp|mtp)",
         "format": "{cluster}_n{index:02d}"
     },
     {
