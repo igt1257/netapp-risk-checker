@@ -91,14 +91,7 @@ def refresh_token():
     # Local refresh_token.txt
     # ==========================================
     if not refresh_token_value:
-
-        with open(
-            "refresh_token.txt",
-            "r",
-            encoding="utf-8"
-        ) as f:
-
-            refresh_token_value = f.read().strip()
+        raise Exception("REFRESH_TOKEN not set in Railway Variables")
 
     # ==========================================
     # Request Access Token
