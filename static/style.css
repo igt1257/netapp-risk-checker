@@ -1,11 +1,54 @@
 body {
     background: #f5f7fb;
+    font-family: Arial, sans-serif;
 }
 
+/* header */
+h1 {
+    font-weight: 700;
+    color: #1f2d3d;
+}
+
+/* card */
 .card {
-    border-radius: 15px;
+    border-radius: 16px;
+    border: none;
 }
 
+/* table */
 table {
     font-size: 14px;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/* hover effect */
+.table-hover tbody tr:hover {
+    background: #f1f6ff;
+}
+
+/* status styles */
+.status-fail {
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.status-ok {
+    color: #ffc107;
+    font-weight: 700;
+}
+
+/* badge style (future use) */
+.badge-soft {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* loading overlay */
+#loading {
+    padding: 30px;
 }

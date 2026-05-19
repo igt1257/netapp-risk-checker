@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-
     <title>NetApp Risk Dashboard</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,17 +14,22 @@
 
 <div class="container py-5">
 
-    <h1 class="mb-4">
-        NetApp Multi-Cluster Fail Disk Checker
-    </h1>
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h1>🧠 NetApp Risk Dashboard</h1>
+        <p class="text-muted">
+            Multi-cluster fail disk monitoring system
+        </p>
+    </div>
 
+    <!-- FORM CARD -->
     <div class="card shadow-sm p-4 mb-4">
 
         <form method="POST" onsubmit="showLoading()">
 
             <div class="mb-3">
 
-                <label class="form-label">
+                <label class="form-label fw-bold">
                     Cluster List
                 </label>
 
@@ -33,17 +37,17 @@
                     class="form-control"
                     name="clusters"
                     rows="6"
-                    placeholder="EX: Please use separate lines for multiple cluster
+                    placeholder="One cluster per line:
 nacmode1
 nacmode2
-nacmode3
-"
+nacmode3"
                     required></textarea>
+
             </div>
 
             <div class="mb-3">
 
-                <label class="form-label">
+                <label class="form-label fw-bold">
                     Max Node
                 </label>
 
@@ -56,82 +60,92 @@ nacmode3
                     max="99">
             </div>
 
-            <button class="btn btn-primary">
-                Check Risks
+            <button class="btn btn-primary w-100">
+                🚀 Check Risks
             </button>
 
         </form>
+
     </div>
 
+    <!-- LOADING -->
     <div id="loading" class="text-center d-none">
 
         <div class="spinner-border text-primary"></div>
 
-        <p class="mt-3">
-            Checking clusters...
+        <p class="mt-3 text-muted">
+            Scanning clusters...
         </p>
 
     </div>
 
+    <!-- RESULTS -->
     {% if results %}
 
     <div class="d-flex justify-content-between align-items-center mb-3">
 
         <h3>
-            Fault Results ({{ results|length }})
+            📊 Fault Results
+            <span class="text-muted">({{ results|length }})</span>
         </h3>
 
         <a href="/export" class="btn btn-success">
-            Export CSV
+            ⬇ Export CSV
         </a>
 
     </div>
 
-    <div class="table-responsive">
+    <div class="card shadow-sm">
 
-        <table class="table table-bordered table-hover bg-white">
+        <div class="table-responsive">
 
-            <thead class="table-dark">
+            <table class="table table-hover mb-0">
 
-            <tr>
-                <th>Hostname</th>
-                <th>Status</th>
-                <th>Detail</th>
-                <th>Triggered</th>
-                <th>Last Triggered</th>
-            </tr>
+                <thead class="table-dark">
 
-            </thead>
+                <tr>
+                    <th>Hostname</th>
+                    <th>Status</th>
+                    <th>Detail</th>
+                    <th>Triggered</th>
+                    <th>Last Triggered</th>
+                </tr>
 
-            <tbody>
+                </thead>
 
-            {% for r in results %}
+                <tbody>
 
-            <tr>
+                {% for r in results %}
 
-                <td>{{ r.hostname }}</td>
+                <tr>
 
-                {% if r.status == "FAIL DISK" %}
-                    <td class="text-danger fw-bold">
-                        {{ r.status }}
+                    <td class="fw-semibold">
+                        {{ r.hostname }}
                     </td>
-                {% else %}
-                    <td class="text-warning fw-bold">
-                        {{ r.status }}
-                    </td>
-                {% endif %}
 
-                <td>{{ r.detail }}</td>
-                <td>{{ r.triggered }}</td>
-                <td>{{ r.last_triggered }}</td>
+                    {% if r.status == "FAIL DISK" %}
+                        <td class="status-fail">
+                            🔴 {{ r.status }}
+                        </td>
+                    {% else %}
+                        <td class="status-ok">
+                            🟡 {{ r.status }}
+                        </td>
+                    {% endif %}
 
-            </tr>
+                    <td>{{ r.detail }}</td>
+                    <td>{{ r.triggered }}</td>
+                    <td>{{ r.last_triggered }}</td>
 
-            {% endfor %}
+                </tr>
 
-            </tbody>
+                {% endfor %}
 
-        </table>
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
@@ -142,10 +156,8 @@ nacmode3
 <script>
 
 function showLoading() {
-
     document.getElementById("loading")
-        .classList
-        .remove("d-none")
+        .classList.remove("d-none");
 }
 
 </script>
