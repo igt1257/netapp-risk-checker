@@ -12,6 +12,7 @@ import os
 import csv
 import json
 import http.client
+import string
 
 from io import StringIO, BytesIO
 
