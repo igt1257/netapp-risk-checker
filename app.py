@@ -37,41 +37,33 @@ LAST_RESULTS = []
 # Cluster Naming Rules
 # ==================================================
 PATTERNS = [
-    {
-        "match": r"^(spfsc|spfscdr)",
-        "format": "{cluster}-n{index:02d}"
-    },
-    {
-        "match": r"^(mtkhwrd|mtkswrd|mtkoa|mtkdr|mtkia|mcp|mtp)",
-        "format": "{cluster}_n{index:02d}"
-    },
-    {
-        "match": r"^(nacmode|amcmode|nbt|ambt|TY)",
-        "format": "{cluster}-{index:02d}"
-    },
-    {
-        "match": r"^(tcfsc|dsfsc)",
-        "format": "{cluster}n{index:02d}"
-    }
+    {"match": r"^(spfsc|spfscdr)", "format": "{cluster}-n{index:02d}"},
+    {"match": r"^(mtkhwrd|mtkswrd|mtkoa|mtkdr|mtkia|mcp|mtp|msz|mcd|mbj)", "format": "{cluster}_n{index:02d}"},
+    {"match": r"^(nacmode|amcmode|nbt|ambt|TY|usana)", "format": "{cluster}-{index:02d}"},
+    {"match": r"^(tcfsc|dsfsc)", "format": "{cluster}n{index:02d}"}
 ]
 
 # ==================================================
 # Build Hostname
 # ==================================================
 def build_hostname(cluster, index):
-
     cluster = cluster.strip()
 
+    # musfs / amscfs 特殊規則
+    if re.match(r"^musfs", cluster) or re.match(r"^amscfs", cluster):
+        if index > 26:
+            raise ValueError("only supports up to 26 nodes")
+
+        suffix = string.ascii_lowercase[index - 1]
+        return f"{cluster}{suffix}"
+
+    # 一般規則
     for p in PATTERNS:
-
         if re.match(p["match"], cluster):
+            return p["format"].format(cluster=cluster, index=index)
 
-            return p["format"].format(
-                cluster=cluster,
-                index=index
-            )
-
-    return f"{cluster}{index:02d}"
+    # default
+    return f"{cluster}-{index:02d}"
 
 # ==================================================
 # Refresh Token
